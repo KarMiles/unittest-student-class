@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 
+
 class Student:
     """A Student class as base for method testing"""
 
@@ -14,7 +15,6 @@ class Student:
     def full_name(self):
         return f"{self._first_name} {self._last_name}"
 
-
-if __name__ == '__main__':
-    student = Student("John", "Baker")
-    print(student)
+    def alert_santa(self):
+        self.naughty_list = True
+    
