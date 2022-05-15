@@ -2,6 +2,7 @@ import unittest
 from unittest.result import failfast
 from student import Student
 from datetime import date, timedelta
+from dateutil.relativedelta import relativedelta
 from unittest.mock import patch
 
 
@@ -48,6 +49,7 @@ class TestStudent(unittest.TestCase):
 
     def test_apply_extention(self):
         print('test_apply_extention')
+
         old_end_date = self.student.end_date
         self.student.apply_extension(30)
         self.assertEqual(self.student.end_date, old_end_date + timedelta(days=30))
@@ -69,6 +71,7 @@ class TestStudent(unittest.TestCase):
             schedule = self.student.course_schedule()
             self.assertEqual(schedule, "Success")
 
+
     def test_course_schedule_failed(self):
         with patch("student.requests.get") as mocked_get:
             mocked_get.return_value.ok = False
@@ -76,13 +79,29 @@ class TestStudent(unittest.TestCase):
             schedule = self.student.course_schedule()
             self.assertEqual(schedule, "Something went wrong with the request!")
 
+
     def test_return_student_start_date(self):
         print('test_return_student_start_date')
 
         start_date = self.student.return_student_start_date()
         today = date.today()
         self.assertEqual(start_date, today)
-        print(today)
+
+
+    def test_given_extension_yes(self):
+        print('test_given_extension_yes')
+
+        self.student.end_date = date.today() + relativedelta(years=1) + timedelta(days=1)
+        extended = self.student.given_extension()
+        self.assertEqual(extended, "Student given extension")
+
+
+    def test_given_extension_no(self):
+        print('test_given_extension_no')
+
+        self.student.end_date = date.today() + relativedelta(years=1)
+        extended = self.student.given_extension()
+        self.assertEqual(extended, "Student not given extension")
 
 if __name__ == '__main__':
     unittest.main()

@@ -10,7 +10,7 @@ class Student:
         self._first_name = first_name
         self._last_name = last_name
         self._start_date = date.today()
-        self.end_date = date.today() + relativedelta(years=2)
+        self.end_date = date.today() + relativedelta(years=1)
         self.naughty_list = False
 
     @property
@@ -30,6 +30,7 @@ class Student:
         self.end_date += timedelta(days=days)
         # return self.end_date
     
+
     def course_schedule(self):
         response = requests.get(f"http://company.com/course-schedule/{self._last_name}/{self._first_name}")
 
@@ -38,5 +39,18 @@ class Student:
         else:
             return "Something went wrong with the request!"
 
+
     def return_student_start_date(self):
         return self._start_date
+
+
+    def given_extension(self):
+        extended = self.end_date > date.today() + relativedelta(years=1)
+
+        if extended:
+            extended_message = "Student given extension"
+        else:
+            extended_message = "Student not given extension"
+
+        print(extended_message)
+        return extended_message
