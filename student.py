@@ -1,5 +1,6 @@
 from datetime import date, timedelta
-
+from urllib import response
+import requests
 
 class Student:
     """A Student class as base for method testing"""
@@ -17,14 +18,21 @@ class Student:
 
     @property
     def email(self):
-    #     email = self._first_name \
-    #         + "." \
-    #         + self._last_name \
-    #         + "@email.com"
-    #     email = email.lower()
         return f"{self._first_name.lower()}.{self._last_name.lower()}@email.com"
 
 
     def alert_santa(self):
         self.naughty_list = True
+
+
+    def apply_extension(self, days):
+        self.end_date += timedelta(days=days)
+        # return self.end_date
     
+    def course_schedule(self):
+        response = requests.get(f"http://company.com/course-schedule/{self._last_name}/{self._first_name}")
+
+        if response.ok:
+            return response.text
+        else:
+            return "Something went wrong with the request!"
