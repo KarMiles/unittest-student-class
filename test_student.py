@@ -1,7 +1,7 @@
 import unittest
 from unittest.result import failfast
 from student import Student
-from datetime import timedelta
+from datetime import date, timedelta
 from unittest.mock import patch
 
 
@@ -75,6 +75,14 @@ class TestStudent(unittest.TestCase):
 
             schedule = self.student.course_schedule()
             self.assertEqual(schedule, "Something went wrong with the request!")
+
+    def test_return_student_start_date(self):
+        print('test_return_student_start_date')
+
+        start_date = self.student.return_student_start_date()
+        today = date.today()
+        self.assertEqual(start_date, today)
+        print(today)
 
 if __name__ == '__main__':
     unittest.main()
